@@ -1,16 +1,16 @@
-export default function Card(){
+export default function Card({id,  name, image }){
   return(
-    <div className="card">
-      <img src="http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg" />
+    <a href={`/personagem/${id}`} className="card" id={id}>
+      <img src={image} alt={name} />
 
       <div className="card_content">
         <p>
-          3-D Man
+          {name}
         </p>
         <button title="Favoritar Herói">
-          <img src="/assets/img/icones/heart/Path.png" />
+          <img src="/assets/img/icones/heart/Path.png" alt="Favorite este Herói" />
         </button>
       </div>
-    </div>
+    </a>
   )
 }
