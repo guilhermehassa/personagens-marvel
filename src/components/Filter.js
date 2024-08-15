@@ -7,18 +7,18 @@ export default function Filter(){
         </p>
 
         <div>
-          <img src="/assets/img/icones/heroi/noun_Superhero_2227044.png"/>
+          <img src="/assets/img/icones/heroi.png"/>
           <span>
             Ordenar por nome - A/Z
           </span>
           <button>
-            <img src="/assets/img/toggle/group 6.png" />
+            <img src="/assets/img/icones/toggle_unchecked.png" />
           </button>
         </div>
 
         <div id="favorite">
           <button>
-            <img src="/assets/img/icones/heart/Path Copy 2.png" />
+            <img src="/assets/img/icones/heart_unchecked.png" />
           </button>
           <span>
             Somente Favoritos
