@@ -77,6 +77,7 @@ button{
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .hero{
@@ -102,6 +103,7 @@ button{
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
+  width: 100%;
 }
 
 .searchForm button{
@@ -122,6 +124,7 @@ button{
 
 .searchForm button img{
   margin-bottom: -4px;
+  height: 1.4rem;
 }
 
 .searchForm input{
@@ -194,9 +197,6 @@ button{
   height: 14px;
 }
 
-.listSection .container{
-}
-
 .listSection .list{
   list-style: none;
   padding: 0;
@@ -211,6 +211,8 @@ button{
   box-sizing: border-box;
   width: 50%;
   padding: 1%;
+  color: #000000;
+  text-decoration: none;
 }
 
 .listSection .card > img{
