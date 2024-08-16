@@ -15,7 +15,7 @@ export default function List({ searchTerm, sortOrder, showFavoritesOnly, favorit
       nameURI = `&nameStartsWith=${name}`;
     }
 
-    const url = `https://gateway.marvel.com:443/v1/public/characters?orderBy=${sortOrder}&limit=10${nameURI}&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+    const url = `https://gateway.marvel.com:443/v1/public/characters?orderBy=${sortOrder}&limit=20${nameURI}&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
     const response = await fetch(url);
     const data = await response.json();
