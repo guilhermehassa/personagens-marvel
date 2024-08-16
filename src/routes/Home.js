@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { useOutletContext } from "react-router-dom";
+import { useFavorite } from '../context/FavoriteContext'; // Ajuste o caminho conforme necessário
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Filter from '../components/Filter';
 import List from '../components/List';
 import Footer from '../components/Footer';
 
-function Home({ data }) {
-  const { favoriteHeroes, setFavoriteHeroes } = useOutletContext();
+function Home() {
+  const { favoriteHeroes, setFavoriteHeroes } = useFavorite();
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("name");

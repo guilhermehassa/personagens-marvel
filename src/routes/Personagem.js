@@ -1,38 +1,71 @@
 import md5 from 'crypto-js/md5';
 import { useQuery } from 'react-query';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { useFavorite } from '../context/FavoriteContext';
 import SearchForm from '../components/SearchForm';
 import MagazineCard from '../components/MagazineCard';
 
+const publicKey = 'b635b482fcbc1102595a929dde3a4566';
+const privateKey = '49b2b45c433e63d310fd99b440f48c6fc5430154';
+
 const fetchCharacter = async (id) => {
-  const publicKey = 'b635b482fcbc1102595a929dde3a4566';
-  const privateKey = '49b2b45c433e63d310fd99b440f48c6fc5430154';
   const ts = new Date().getTime();
   const hash = md5(ts + privateKey + publicKey).toString();
-  console.log(id.queryKey[1])
-  const url = `https://gateway.marvel.com:443/v1/public/characters/${id.queryKey[1]}&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
-
+  const url = `https://gateway.marvel.com:443/v1/public/characters/${id}?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
   const response = await fetch(url);
   const data = await response.json();
-  return data.data.results;
+  return data.data.results[0]; // Retorna o personagem
 };
 
-export default function Personagem(){
-  const {id} = useParams();
-  const { data, isLoading, error } = useQuery(['character',id], fetchCharacter, {
-    staleTime: 1000 * 60 * 60 * 2, // 2 Horas
-  });
+const fetchComics = async (characterId) => {
+  const ts = new Date().getTime();
+  const hash = md5(ts + privateKey + publicKey).toString();
+  const url = `https://gateway.marvel.com:443/v1/public/comics?characters=${characterId}&orderBy=onsaleDate&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.data.results; // Retorna a lista de quadrinhos
+};
 
-  if (isLoading) return <div>Pesquisando...</div>;
-  if (error) return <div>Erro ao pesquisar personagem</div>;
+export default function Personagem() {
+  const { id } = useParams();
+  const { favoriteHeroes, setFavoriteHeroes } = useFavorite();
+  
+  const { data: character, isLoading: isLoadingCharacter, error: errorCharacter } = useQuery(
+    ['character', id],
+    () => fetchCharacter(id),
+    {
+      staleTime: 1000 * 60 * 60 * 12, // 12 Horas
+    }
+  );
+  
+  const { data: comics, isLoading: isLoadingComics, error: errorComics } = useQuery(
+    ['comics', id],
+    () => fetchComics(id),
+    {
+      enabled: !!character, // Só ativa a query se o personagem estiver carregado
+    }
+  );
 
-  console.log(data);
+  const handleFavoriteToggle = () => {
+    if (favoriteHeroes.includes(id)) {
+      setFavoriteHeroes(favoriteHeroes.filter(heroId => heroId !== id));
+    } else {
+      if (favoriteHeroes.length < 5) {
+        setFavoriteHeroes([...favoriteHeroes, id]);
+      } else {
+        alert("Você só pode favoritar até 5 heróis.");
+      }
+    }
+  };
 
-  return(
+  if (isLoadingCharacter || isLoadingComics) return <div>Carregando...</div>;
+  if (errorCharacter || errorComics) return <div>Erro ao carregar dados</div>;
+
+  return (
     <>
       <header className='headerPersonagem'>
         <div className='container'>
-          <Link to='/' >
+          <Link to='/'>
             <img src="../assets/img/logo.png" alt='Marvel Search Heros'/>
           </Link>
           <SearchForm />
@@ -42,45 +75,41 @@ export default function Personagem(){
         <div className='container'>
           <div className='personagem_conteudo'>
             <div className='personagem_conteudo__titulo'>
-              <h1>
-                {data.name}
-              </h1>
-              <button>
-                <img src="/assets/img/icones/heart_unchecked.png" alt='Favoritar Personagem'/> 
+              <h1>{character.name}</h1>
+              <button onClick={handleFavoriteToggle}>
+                <img
+                  src={favoriteHeroes.includes(id) ? "/assets/img/icones/heart_checked.png" : "/assets/img/icones/heart_unchecked.png"}
+                  alt={favoriteHeroes.includes(id) ? "Herói Favoritado" : "Favoritar Personagem"}
+                />
               </button>
             </div>
             <div className='personagem_conteudo__descricao'>
               <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {character.description || "Descrição não disponível."}
               </p>
             </div>
             <div className='personagem_conteudo__detalhes'>
               <div>
                 <p>Quadrinhos</p>
                 <img src='/assets/img/icones/livro.png' alt='Quadrinhos' />
-                300
+                {character.comics.available || "Não disponível"}
               </div>
               <div>
                 <p>Filmes</p>
                 <img src='/assets/img/icones/video.png' alt='Filmes' />
-                40
+                {character.movies || "Não disponível"}
               </div>
               <div className='rating'>
                 <p>Rating:</p>
-
-                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
-                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
-                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
-                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
                 <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
               </div>
               <div className='rating'>
-                <p>Último Quadrinho: <span>13 fev 2020</span></p>
+                <p>Último Quadrinho: <span>{character.lastComicDate || "Não disponível"}</span></p>
               </div>
             </div>
           </div>
           <div className='personagem_imagem'>
-          <img src={`${data.thumbnail.path}.${data.thumbnail.extension}`} alt={data.name}/> 
+            <img src={`${character.thumbnail.path}.${character.thumbnail.extension}`} alt={character.name}/> 
           </div>
         </div>
       </section>
@@ -88,61 +117,17 @@ export default function Personagem(){
         <div className='container'>
           <h2>Últimos Lançamentos</h2>
           <ul>
-            {/*data.comics.items.map((comic) => (
+            {comics.map((comic) => (
               <MagazineCard
-                key={comic.id} 
+                key={comic.id}
                 id={comic.id}
-                name={comic.name}
+                name={comic.title}
                 image={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
               />
-
-            ))*/};
-
-            <MagazineCard
-              key={'1'} 
-              id={'2'}
-              name={'teste'}
-              image={`http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg`}
-            />
-            <MagazineCard
-              key={'1'} 
-              id={'2'}
-              name={'teste'}
-              image={`http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg`}
-            />
-            <MagazineCard
-              key={'1'} 
-              id={'2'}
-              name={'Lorem Ipsum Dolor Sit.'}
-              image={`http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg`}
-            />
-            <MagazineCard
-              key={'1'} 
-              id={'2'}
-              name={'Lorem Ipsum Dolor Sit.'}
-              image={`http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg`}
-            />
-            <MagazineCard
-              key={'1'} 
-              id={'2'}
-              name={'Lorem Ipsum Dolor Sit.'}
-              image={`http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg`}
-            />
-            <MagazineCard
-              key={'1'} 
-              id={'2'}
-              name={'Lorem Ipsum Dolor Sit.'}
-              image={`http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg`}
-            />
-            <MagazineCard
-              key={'1'} 
-              id={'2'}
-              name={'Lorem Ipsum Dolor Sit.'}
-              image={`http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg`}
-            />
+            ))}
           </ul>
         </div>
       </section>
     </>
-  )
+  );
 }

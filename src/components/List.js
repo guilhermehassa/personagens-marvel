@@ -62,7 +62,7 @@ export default function List({ searchTerm, sortOrder, showFavoritesOnly, favorit
           {filteredData?.map((character) => (
             <Card
               key={character.id}
-              id={character.id}
+              id={String(character.id)} // Converte o ID para string
               name={character.name}
               image={`${character.thumbnail.path}.${character.thumbnail.extension}`}
               favoriteHeroes={favoriteHeroes}
