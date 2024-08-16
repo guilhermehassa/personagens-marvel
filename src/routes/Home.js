@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Filter from '../components/Filter';
@@ -6,12 +9,15 @@ import Footer from '../components/Footer';
 
 
 function Home() {
+
+  const [searchTerm, setSearchTerm] = useState("");
+  
   return (
       <div className="App">
         <Header/>
-        <Hero />
+        <Hero onSearch={setSearchTerm} />
         <Filter />
-        <List />
+        <List searchTerm={searchTerm} />
         <Footer />
       </div>
   );

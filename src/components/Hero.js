@@ -1,6 +1,6 @@
 import SearchForm from "./SearchForm";
 
-export default function Hero(){
+export default function Hero({ onSearch }){
   return(
     <section className="hero">
       <div className="container">
@@ -10,7 +10,7 @@ export default function Hero(){
         <p>
           Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!
         </p>
-        <SearchForm />
+        <SearchForm  onSearch={onSearch} />
       </div>
     </section>
   )
