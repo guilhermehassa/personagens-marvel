@@ -33,7 +33,7 @@ export default function Personagem(){
       <header className='headerPersonagem'>
         <div className='container'>
           <Link to='/' >
-            <img src="../assets/img/logo.png"/>
+            <img src="../assets/img/logo.png" alt='Marvel Search Heros'/>
           </Link>
           <SearchForm />
         </div>
@@ -46,7 +46,7 @@ export default function Personagem(){
                 {data.name}
               </h1>
               <button>
-                <img src="/assets/img/icones/heart_unchecked.png"/> 
+                <img src="/assets/img/icones/heart_unchecked.png" alt='Favoritar Personagem'/> 
               </button>
             </div>
             <div className='personagem_conteudo__descricao'>
@@ -68,11 +68,11 @@ export default function Personagem(){
               <div className='rating'>
                 <p>Rating:</p>
 
-                <img src='/assets/img/icones/review_checked.png' />
-                <img src='/assets/img/icones/review_checked.png' />
-                <img src='/assets/img/icones/review_checked.png' />
-                <img src='/assets/img/icones/review_checked.png' />
-                <img src='/assets/img/icones/review_checked.png' />
+                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
+                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
+                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
+                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
+                <img src='/assets/img/icones/review_checked.png' alt='Review Rate' />
               </div>
               <div className='rating'>
                 <p>Último Quadrinho: <span>13 fev 2020</span></p>

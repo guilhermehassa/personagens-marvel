@@ -211,8 +211,6 @@ button{
   box-sizing: border-box;
   width: 50%;
   padding: 1%;
-  color: #000000;
-  text-decoration: none;
 }
 
 .listSection .card > img{
@@ -231,9 +229,17 @@ button{
   margin: 0.5rem 0;
 }
 
-.listSection .card .card_content p{
+.listSection .card .card_content a{
   text-align: left;
   font-weight: 600;
+  color: #000000;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.listSection .card .card_content a:hover{
+  text-decoration: underline;
+  color: var(--red);
 }
 
 .listSection .card .card_content button img{

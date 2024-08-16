@@ -12,9 +12,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <Header/>
-        <Hero />
-        <Filter />
-        <List />
+        <div className='404'>
+          <h1>Nem os Heróis conseguiram encontrar sua pesquisa :(</h1>
+        </div>
         <Footer />
       </div>
     </QueryClientProvider>

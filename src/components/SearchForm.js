@@ -14,7 +14,7 @@ export default function SearchForm({onSearch}){
   return(
     <form onSubmit={handleSubmit} className="searchForm" >
       <button type="submit">
-        <img src="/assets/img/icones/pesquisa.png" aria-hidden="true" />
+        <img src="/assets/img/icones/pesquisa.png" alt="Ícone de Pesquisa" />
       </button>
       <input type="text" placeholder="Procure por heróis" className="" value={searchTerm} onChange={handleInputChange} />
       
