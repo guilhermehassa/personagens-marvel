@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Filter from '../components/Filter';
@@ -11,13 +10,14 @@ import Footer from '../components/Footer';
 function Home() {
 
   const [searchTerm, setSearchTerm] = useState("");
-  
+  const [sortOrder, setSortOrder] = useState("name");
+
   return (
       <div className="App">
         <Header/>
         <Hero onSearch={setSearchTerm} />
-        <Filter />
-        <List searchTerm={searchTerm} />
+        <Filter onSortOrderChange={setSortOrder}  />
+        <List searchTerm={searchTerm} sortOrder={sortOrder} />
         <Footer />
       </div>
   );

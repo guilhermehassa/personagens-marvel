@@ -1,4 +1,13 @@
-export default function Filter(){
+import { useState } from 'react';
+
+export default function Filter({onSortOrderChange}){
+  const [isAscending, setIsAscending] = useState(true);
+
+  const handleSortToggle = () => {
+    const newOrder = isAscending ? "-name" : "name";
+    setIsAscending(!isAscending);
+    onSortOrderChange(newOrder);
+  };
   return(
     <section className="filter">
       <div className="container">
@@ -11,8 +20,12 @@ export default function Filter(){
           <span>
             Ordenar por nome - A/Z
           </span>
-          <button>
-            <img src="/assets/img/icones/toggle_unchecked.png" />
+          <button onClick={handleSortToggle}>
+            {isAscending ?
+              <img src="/assets/img/icones/toggle_unchecked.png" /> :
+              <img src="/assets/img/icones/toggle_checked.png" />
+            }
+            
           </button>
         </div>
 
