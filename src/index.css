@@ -75,6 +75,8 @@ button{
   padding: 0 1%;
   margin: 0 auto;
   box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .hero{
@@ -93,7 +95,7 @@ button{
   margin-bottom: 2rem;
 }
 
-.hero form{
+.searchForm{
   padding: 1rem;
   border-radius: 3rem;
   background-color: var(--lightRed);
@@ -102,7 +104,7 @@ button{
   position: relative;
 }
 
-.hero form button{
+.searchForm button{
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
@@ -114,15 +116,15 @@ button{
   margin-right: 0.8rem;
 }
 
-.hero form button:hover{
+.searchForm button:hover{
   transform: scale(1.1);
 }
 
-.hero form button img{
+.searchForm button img{
   margin-bottom: -4px;
 }
 
-.hero form input{
+.searchForm input{
   width: calc(100% - 2.8rem);
   height: 1.5rem;
   border: none; outline: none;
@@ -132,7 +134,7 @@ button{
   color: var(--red);
 }
 
-.hero form input::placeholder{
+.searchForm input::placeholder{
   color: #fa7b7b;
 }
 
@@ -192,7 +194,12 @@ button{
   height: 14px;
 }
 
-.list .container{
+.listSection .container{
+}
+
+.listSection .list{
+  list-style: none;
+  padding: 0;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -200,13 +207,13 @@ button{
   margin: 1rem auto;
 }
 
-.list .card{
+.listSection .card{
   box-sizing: border-box;
   width: 50%;
   padding: 1%;
 }
 
-.list .card > img{
+.listSection .card > img{
   width: 100%;
   aspect-ratio: 1 / 1;
   object-position: center;
@@ -214,7 +221,7 @@ button{
   border-bottom: 8px solid var(--red);
 }
 
-.list .card .card_content{
+.listSection .card .card_content{
   width: 100%;
   display: flex;
   align-items: center;
@@ -222,17 +229,17 @@ button{
   margin: 0.5rem 0;
 }
 
-.list .card .card_content p{
+.listSection .card .card_content p{
   text-align: left;
   font-weight: 600;
 }
 
-.list .card .card_content button img{
+.listSection .card .card_content button img{
   width: 25px; height: 25px;
 }
 
 @media screen and (min-width:1024px){
-  .list .card{
+  .listSection .card{
     width: 25%;
   }
 }
@@ -241,4 +248,151 @@ button{
   background-color: var(--red);
   width: 100%;
   padding: 2rem 0;
+}
+
+.headerPersonagem .container{
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerPersonagem a{
+  display: inline-flex;
+}
+
+.headerPersonagem .searchForm{
+  margin: 0 0.8rem;
+  width: 90%;
+}
+
+.personagem_conteudo{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.personagem_imagem{
+  width: 100%;
+  position: relative;
+}
+
+.personagem_imagem img{
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.personagem_conteudo__titulo{
+  display: flex;
+  justify-content: space-between;
+  gap:0.5rem;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.personagem_conteudo__titulo h1{
+  font-size: 1.8rem;
+}
+.personagem_conteudo__titulo button{
+  padding: 0;
+  height: 2rem;
+}
+.personagem_conteudo__titulo button img{
+  height: 2rem;
+}
+
+.personagem_conteudo__detalhes{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 1.5rem;
+  margin: 1.2rem 0;
+}
+
+.personagem_conteudo__detalhes div{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.personagem_conteudo__detalhes div.rating{
+  width: 100%;
+}
+
+.personagem_conteudo__detalhes div img{
+  height: 1.2rem;
+  width: auto;
+  object-fit: contain;
+  margin: 0 0.6rem;
+}
+
+.personagem_conteudo__detalhes div p{
+  width: 100%;
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+}
+
+.personagem_conteudo__detalhes div p span{
+  font-weight: 400;
+}
+
+.personagem_conteudo__detalhes div.rating img{
+  margin: 0 0.2rem;
+}
+
+.footerPersonagem{
+  margin: 2rem 0;
+}
+
+.footerPersonagem h2{
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.footerPersonagem ul{
+  list-style: none;
+  margin: 0; padding: 0;
+
+  display: flex; flex-wrap: wrap;
+}
+
+.footerPersonagem ul li{
+  box-sizing: border-box;
+  padding: 1%;
+  width: 50%;
+  text-align: center;
+}
+
+.footerPersonagem ul li img{
+  height: 8rem;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media screen and (min-width: 1024px){
+  
+  .personagem_conteudo{
+    width: 35%;
+  }
+  .personagem_imagem{
+    margin-left: 5%;
+    width: 60%;
+  }
+
+  .headerPersonagem .container{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .headerPersonagem .searchForm{
+    width: 50%;
+  }
+
+  .footerPersonagem ul li{
+    width: 16.6%;
+  }
 }
