@@ -20,7 +20,7 @@ const fetchCharacter = async (id) => {
 const fetchComics = async (characterId) => {
   const ts = new Date().getTime();
   const hash = md5(ts + privateKey + publicKey).toString();
-  const url = `https://gateway.marvel.com:443/v1/public/comics?characters=${characterId}&orderBy=onsaleDate&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+  const url = `https://gateway.marvel.com:443/v1/public/comics?characters=${characterId}&orderBy=onsaleDate&limit=10&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
   const response = await fetch(url);
   const data = await response.json();
   return data.data.results; // Retorna a lista de quadrinhos
